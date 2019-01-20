@@ -10,14 +10,22 @@
 
 include( CMakeParseArguments )
 
+option (ENABLE_OPT "" ON)
+
+add_subdirectory(${BGFX_DIR}/3rdparty/spirv-headers)
+add_subdirectory(${BGFX_DIR}/3rdparty/spirv-tools)
+add_subdirectory(${BGFX_DIR}/3rdparty/spirv-cross)
+add_subdirectory(${BGFX_DIR}/3rdparty/glslang)
+
 include( cmake/3rdparty/fcpp.cmake )
 include( cmake/3rdparty/glsl-optimizer.cmake )
 include( cmake/3rdparty/glslang.cmake )
 
 add_executable( shaderc ${BGFX_DIR}/tools/shaderc/shaderc.cpp ${BGFX_DIR}/tools/shaderc/shaderc.h ${BGFX_DIR}/tools/shaderc/shaderc_glsl.cpp ${BGFX_DIR}/tools/shaderc/shaderc_hlsl.cpp ${BGFX_DIR}/tools/shaderc/shaderc_pssl.cpp ${BGFX_DIR}/tools/shaderc/shaderc_spirv.cpp )
+target_include_directories( shaderc PRIVATE ${BGFX_DIR}/3rdparty/spirv-cross ${BGFX_DIR}/3rdparty/spirv-tools/include ${BGFX_DIR}/3rdparty/glslang/glslang/Public ${BGFX_DIR}/3rdparty/glslang/glslang/Include )
 target_compile_definitions( shaderc PRIVATE "-D_CRT_SECURE_NO_WARNINGS" )
 set_target_properties( shaderc PROPERTIES FOLDER "bgfx/tools" )
-target_link_libraries( shaderc bx bimg bgfx-vertexdecl bgfx-shader-spirv fcpp glsl-optimizer glslang )
+target_link_libraries( shaderc bx bimg bgfx-vertexdecl bgfx-shader-spirv fcpp glsl-optimizer glslang spirv-cross-core spirv-cross-glsl spirv-cross-cpp spirv-cross-reflect spirv-cross-msl spirv-cross-hlsl spirv-cross-util SPIRV-Tools SPIRV )
 if( BGFX_CUSTOM_TARGETS )
 	add_dependencies( tools shaderc )
 endif()

@@ -49,7 +49,7 @@ if( MSVC )
 endif()
 
 # Includes
-target_include_directories( bgfx PRIVATE ${BGFX_DIR}/3rdparty ${BGFX_DIR}/3rdparty/dxsdk/include ${BGFX_DIR}/3rdparty/khronos )
+target_include_directories( bgfx PRIVATE ${BGFX_DIR}/3rdparty ${BGFX_DIR}/3rdparty/dxsdk/include ${BGFX_DIR}/3rdparty/khronos ${BGFX_DIR}/3rdparty/spirv-cross )
 target_include_directories( bgfx PUBLIC ${BGFX_DIR}/include )
 
 # bgfx depends on bx and bimg
